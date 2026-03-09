@@ -19,7 +19,7 @@ literature:
 """
 import numpy as np
 
-def valid(A:list, r:int, c:int) -> bool:
+def valid(A:np.ndarray, r:int, c:int) -> bool:
     n = len(A)
     # transforms (r,c) into (offset, flip_offset) which denotes the position in relation to the main diagonals
     offset = c - r
@@ -30,19 +30,19 @@ def valid(A:list, r:int, c:int) -> bool:
     else: 
         return True
 
-def solve(A:list, r:int) -> list:
+def solve(A:np.ndarray, r:int) -> bool:
     n=len(A)
     if n == r:    # terminating condition: we are past last row and thus all queens have been placed
         return True
-    for i in range(n):  # iterates through columns 
-        if valid(A,r,i) == True:  
-            A[r][i] = 1   # place queen if position is valid
+    for c in range(n):  # iterates through columns in our row
+        if valid(A,r,c) == True:  
+            A[r][c] = 1   # place queen if position is valid
             if solve(A,r+1) == True:  # checks if next row has solutions
                 return True
-            A[r][i] = 0   # backtracking if r+1 has no solutions
+            A[r][c] = 0   # backtracking if r+1 has no solutions
     return False
 
-def nqueens(n:int) -> list:
+def nqueens(n:int) -> np.ndarray:
     if n < 4:
         raise ValueError('meow please pick n>3')
     A = np.array([[0 for _ in range(n)] for _ in range(n)]) #initialize n by n board
