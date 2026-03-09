@@ -21,6 +21,7 @@ import numpy as np
 
 def valid(A:list, r:int, c:int) -> bool:
     n = len(A)
+    # transforms (r,c) into (offset, flip_offset) which denotes the position in relation to the main diagonals
     offset = c - r
     flip_offset = ((n - 1) - r) - c
     # check space controlled by queen in (r,c), if the sum != 0 there is at least one queen in this space
