@@ -24,14 +24,11 @@ def valid(A:np.ndarray, r:int, c:int) -> bool:
     # transforms (r,c) into (offset, flip_offset) which denotes the position in relation to the main diagonals
     offset = c - r
     flip_offset = ((n - 1) - r) - c
-    # check space controlled by queen in (r,c), if the sum != 0 there is at least one queen in this space
-    if sum(A[r, :]) + sum(A[:, c]) + sum(A.diagonal(offset)) + sum(np.fliplr(A).diagonal(flip_offset)) != 0:
-        return False
-    else: 
-        return True
+    # check space controlled by queen in (r,c), if the sum == 0 there is no other queen in this space
+    return sum(A[r, :]) + sum(A[:, c]) + sum(A.diagonal(offset)) + sum(np.fliplr(A).diagonal(flip_offset)) == 0
 
 def solve(A:np.ndarray, r:int) -> bool:
-    n=len(A)
+    n = len(A)
     if n == r:    # terminating condition: we are past last row and thus all queens have been placed
         return True
     for c in range(n):  # iterates through columns in our row
